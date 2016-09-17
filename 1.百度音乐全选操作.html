@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style> 
+        body {
+            background: #000;
+        }
+        .clearfix:after { 
+            content: "";
+            display: block;
+            clear: both; }
+        #wrap { 
+            overflow:hidden;
+            margin: 30px auto;
+            width: 312px;
+            height: 216px;
+            border-bottom: 2px solid #4a4a4a;
+            background: #fff;
+        }
+        #wrap .top { 
+            margin: 0;
+            padding: 0;
+            width: 312px;
+            height: 180px;
+            border-bottom: 1px solid #dedede;
+        }
+        #wrap .top li { 
+            width: 278px;
+            height: 12px;
+            padding: 9px 17px;
+        }
+        #wrap .top input.che,input.botChBox { 
+            float: left;
+            margin: 0 15px 0 0;
+            width: 12px;
+            height: 12px; 
+            border: 1px solid #8c8c8c;
+        }
+        #wrap .top div { 
+            position: relative;
+            float: left;
+            width: 250px;
+            height: 12px;
+        }
+        #wrap .top span{ 
+            position: absolute;
+            top: 0;
+            width: 105px;
+            height: 12px;
+            line-height: 12px;
+            font-size: 12px;
+            color: #000; 
+        }
+        #wrap .top span.lef { 
+            left: 0;
+        }
+        #wrap .top span.rig { 
+            right: 0;
+        }
+        #wrap .bottom { 
+            padding: 5px 3px 5px 17px
+            ;height: 25px;
+            width: 292px;
+        }
+        #wrap .bottom input.botChBox {
+            margin-top: 6px;
+        }
+        #wrap .bottom span.allCh { 
+            float: left;
+            margin: 5px 16px 0 0;
+            width: 24px;
+            height: 14px;
+            line-height: 14px;
+            font-size: 12px;
+        }
+        #wrap .bottom div { 
+            position: relative;
+            float: left;
+            margin:0 5px;
+            width: 63px;
+            height: 23px;
+            border: 1px solid #e7e7e7;
+            border-radius: 4px;
+        }
+        #wrap .bottom div.col { 
+            background: url("img/1.gif") no-repeat 9px 5px;
+        }
+        #wrap .bottom div.add { 
+            background: url("img/2.gif") no-repeat 10px 6px;
+        }
+        #wrap .bottom div.del { 
+            background: url("img/3.gif") no-repeat 10px 6px;
+        }
+        #wrap .bottom a { 
+            position: absolute;
+            width: 33px;
+            height: 23px;
+            line-height: 23px;
+            right: 0;
+            top:0;
+            font-size: 12px;
+            color: #949494;
+        }
+
+
+    </style>
+    <script>
+        window.onload = function (){
+            var allChe  = document.getElementsByClassName("che");
+            var allCheck = document.getElementsByClassName("botChBox")[0];
+            var allLis = document.getElementsByTagName("li");
+            var len = allChe.length;
+
+            for( var i = 0; i < len; i++ ){
+                // 设置隔行变色
+                allLis[i].style.background = i % 2 == 0 ? "#bbb" : "#f4f4f4";
+                allLis[i].index = i;
+                // 设置鼠标移出改变颜色
+                allLis[i].onmouseover = function (){
+                    this.style.background = "red";
+                }
+                // 设置鼠标移除操作
+                allLis[i].onmouseout = function (){
+                    if( !allChe[this.index].checked ){
+                        allLis[this.index].style.background = this.index % 2 == 0 ? "#bbb" : "#f4f4f4";
+                    }
+                }
+                // 给多选按钮设置点击操作
+                allChe[i].onclick = function (){
+                    var num = 0;
+                    // 判断当前点击按钮的状态，如果是真，则循环所有的按钮，当有一个按钮是选中状态，num+1，最后判断num的值决定是否让全选也选中
+                    if( this.checked ){
+                        for( var i = 0; i < len; i++ ){
+                            if( allChe[i].checked ){
+                                num++;
+                                if( num == len ){
+                                    allCheck.checked = "checked";
+                                }
+                            }
+                        }
+                    } else {
+                        allCheck.checked = false;
+                    }
+                }
+                // 给全选设置点击操作
+                allCheck.onclick = function (){
+                    // 当全选是选中状态，则循环所有的多选按钮，让它们都选中，并且改变它们的背景色，否则让它们都处于未选中状态，颜色回到初始状态
+                    if( this.checked ){
+                        for( var i = 0; i < allChe.length; i++ ){
+                            allChe[i].checked = true;
+                            allLis[i].style.background = "red";
+                        }
+                    } else {
+                        for( var i = 0; i < allChe.length; i++ ){
+                            allChe[i].checked = false;
+                            allLis[i].style.background = i % 2 == 0 ? "#bbb" : "#f4f4f4";
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body>
+<div id="wrap">
+    <ul class="top">
+        <li class="clearfix">
+            <input class="che" type="checkbox" name=""/>
+            <div>
+                <span class="lef" href="">私奔</span>
+                <span class="rig" href="">梁博</span>
+            </div>
+        </li>
+        <li class="clearfix">
+            <input class="che" type="checkbox" name=""/>
+            <div>
+                <span class="lef" href="">北京北京</span>
+                <span class="rig" href="">梁博，黄勇</span>
+            </div>
+        </li>
+        <li class="clearfix">
+            <input class="che" type="checkbox" name=""/>
+            <div>
+                <span class="lef" href="">我爱你中国</span>
+                <span class="rig" href="">梁博</span>
+            </div>
+        </li>
+        <li class="clearfix">
+            <input class="che" type="checkbox" name=""/>
+            <div>
+                <span class="lef" href="">花火</span>
+                <span class="rig" href="">梁博</span>
+            </div>
+        </li>
+        <li class="clearfix">
+            <input class="che" type="checkbox" name=""/>
+            <div>
+                <span class="lef" href="">回来</span>
+                <span class="rig" href="">梁博</span>
+            </div>
+        </li>
+        <li class="clearfix">
+            <input class="che" type="checkbox" name=""/>
+            <div>
+                <span class="lef" href="">爱要有你才完美</span>
+                <span class="rig" href="">梁博，那英</span>
+            </div>
+        </li>
+    </ul>
+    <div class="bottom clearfix">
+        <input class="botChBox" type="checkbox" />
+        <span class="allCh">全选</span>
+        <div class="col">
+            <a href="#">收藏</a>
+        </div>
+        <div class="add">
+            <a href="#">添加</a>
+        </div>
+        <div class="del">
+            <a href="#">删除</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // var oTop = document.getElementsByClassName('top')[0];
+    // var aLi = oTop.getElementsByTagName('li');
+    // var oChe = document.getElementsByClassName('che');
+    // var oBot = document.getElementsByClassName('bottom')[0];
+    // var oInp = oBot.getElementsByTagName('input')[0];
+    // var arrCol = ['#dffafa','#f7f7f7'];
+
+    // function fnChecked(){
+    //     for ( var i=0;i<oChe.length;i++ ){
+    //         if (oInp.checked){
+    //             oChe[i].checked = true;
+    //             aLi[i].style.background = '#ccc';
+    //         } else {
+    //             oChe[i].checked = '';
+    //             aLi[i].style.background = arrCol[i%2];
+    //         }
+
+    //     }
+    // }
+
+    // function ifAllChe(){
+    //     var flag = true;
+    //     for( var i=0;i<oChe.length;i++ ){
+    //         if( !oChe[i].checked ){
+    //             flag = false;
+    //         }
+    //     }
+    //     oChe.checked = flag;
+    //     if (flag) {
+    //         oInp.checked = flag;
+    //     } else {
+    //         oInp.checked = flag;
+    //     }
+    // }
+
+    // for ( var i=0;i<oChe.length;i++ ){
+    //     oChe[i].onclick = function (){
+    //         ifAllChe();
+    //     }
+    // }
+
+    // for ( var i=0;i<aLi.length;i++ ){
+    //     aLi[i].style.background = arrCol[i%2];
+    //     aLi[i].index = i;
+    //     aLi[i].onmouseover = function (){
+    //         this.style.background = '#ccc';
+    //     };
+    //     aLi[i].onmouseout = function (){
+    //         if (oChe[this.index].checked){
+    //             this.style.background = '#ccc';
+    //         } else {
+    //             this.style.background = arrCol[this.index%2];
+    //         }
+    //     };
+    // }
+    // oInp.onclick = function (){
+    //     fnChecked();
+    // };
+
+</script>
+</body>
+</html>
